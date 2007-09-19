@@ -21,6 +21,9 @@ Methods, shall be named in lowerCamelCase.
 
 All classes shall be named with a capital for each word. LikeThisClass.
 
+= Documentation =
+All methods, classes and member variables should be pydocced.
+In-code comments generally imply badly written code - if you want to write a comment, write a method instead (Refactoring: improving the design of existing code (Martin Fowler)).
 
-
+ 
  
