@@ -16,9 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import numpy
-
-from item import Wall
+import logging
+from item.Wall import Wall
 
 class Level:
     """ Represents a single level of the dungeon.
@@ -33,13 +32,20 @@ class Level:
         """ Build a random level
         """
         size = (5,5)
-        tiles = numpy.zeros(size)
-        for i in range(0,size[0]):
-            tiles[0,i] = Wall()
-            tiles[size[1] - 1,i] = Wall()
+        x = []
         for i in range(0,size[1]):
-            tiles[i,0] = Wall()
-            tiles[i,size[0]] = Wall()
+            x.append(None)
+        tiles = []
+        for i in range(0,size[0]):
+            tiles.append(x)
+        for i in range(0,size[0]):
+            logging.debug("Setting 0,"+str(i))
+            tiles[0][i] = Wall()
+            logging.debug("Setting "+str(size[1] - 1) + ","+str(i))
+            tiles[size[1] - 1][i] = Wall()
+        for i in range(0,size[1]):
+            tiles[i][0] = Wall()
+            tiles[i][size[0] - 1] = Wall()
         return Level(tiles)
     
     def getSize(self):
