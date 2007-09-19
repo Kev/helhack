@@ -20,5 +20,12 @@
  * the index operator like tiles[row][column]. Has a print method.
  * Tile: Stores color, ASCII character, passable, has a print method.
 
+= Future releases =
 
+ * Town/overworld with NPCs
+ * Quests
+ * Plot
+ * Dungeon editor
+ * Dungeon master mode
+ 
  
