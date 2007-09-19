@@ -16,7 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import numpy
+
+import item.Wall
+
 class Level:
 	""" Represents a single level of the dungeon.
 	"""
 	
+	def __init__(self, tiles):
+		self.tiles = tiles
+	
+	def buildRandom():
+		tiles = numpy.zeros((5,5))
+		for i in range(0,5):
+			tiles[0,i] = Wall()
+			tiles[4,i] = Wall()
+			tiles[i,0] = Wall()
+			tiles[i,4] = Wall()
+	    return Level(tiles)

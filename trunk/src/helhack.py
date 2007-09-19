@@ -45,7 +45,7 @@ if __name__ == "__main__":
         while carryOn:
             logging.debug("Taking game turn")
             carryOn = game.turn()
-        logging.info("Ending turns\n")
+        logging.info("Ending turns")
         del game
     except:
         del game

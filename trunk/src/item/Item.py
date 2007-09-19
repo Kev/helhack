@@ -21,20 +21,29 @@ class Item:
 	""" Base class for all ingame objects, including creatures and scenery
 	"""
 	
-	def blocking(self):
+	def __init__(self):
+		self.blocking = False
+		self.carryable = False
+		self.glyph = "@"
+		self.colour = curses.COLOR_WHITE
+	
+	def isBlocking(self):
 		""" Does this item prevent movement on a map?
 		"""
+		return self.blocking
 	
-	def carryable(self):
+	def isCarryable(self):
 		""" Can this item be carried in a backpack?
 		"""
+		return self.carryable
 
-	def glyph(self):	
+	def getGlyph(self):	
 		""" The character used to render this in curses.
 		"""
-		return "@"
+		return self.glyph
 	
-	def colour(self):
+	def getColour(self):
 		""" The colour used to render this tile in curses.
 		"""
+		return self.colour
 		

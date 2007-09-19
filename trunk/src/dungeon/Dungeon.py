@@ -19,8 +19,17 @@
 class Dungeon:
 	""" Class representing a dungeon.
 	"""
-	levels = []
+	def __init__(self):
+		self.levels = []
+
+    def buildRandom():
+		dungeon = Dungeon()
+		dungeon.addLevel(Level.buildRandom()))
+		return dungeon
 	
 	def addLevel(self, level):
 		self.levels.append(level)
+		
+	def getLevels(self):
+		return self.levels
 	
