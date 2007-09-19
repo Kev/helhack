@@ -18,7 +18,7 @@
 
 import curses
 import logging
-
+from dungeon import Dungeon 
 
 class CursesController:
 	def __init__(self):
@@ -43,11 +43,13 @@ class CursesController:
 		curses.endwin()
 		logging.debug("Arr, fate be a harsh mistress; controller down.")
 	
-	def paint():
+	def render(self):
 		logging.debug("Painting")
 		
 	def turn(self):
 		""" Take one turn of the game.
 		"""
-		logging.debug("Taking a turn\n")
+		logging.debug("Taking a turn")
+		
+		self.render()
 		return False
