@@ -18,6 +18,7 @@
 
 import logging
 from item.Wall import Wall
+import random
 
 class Level:
     """ Represents a single level of the dungeon.
@@ -31,7 +32,7 @@ class Level:
     def buildRandom():
         """ Build a random level
         """
-        size = (5,5)
+        size = (random.randrange(5,10),random.randrange(5,10))
         x = []
         for i in range(0,size[1]):
             x.append(None)
@@ -44,7 +45,9 @@ class Level:
             logging.debug("Setting "+str(size[1] - 1) + ","+str(i))
             tiles[size[1] - 1][i] = Wall()
         for i in range(0,size[1]):
+            logging.debug("Setting "+str(i)+",0")
             tiles[i][0] = Wall()
+            logging.debug("Setting "+str(i) + ","+str(size[1] - 1))
             tiles[i][size[0] - 1] = Wall()
         level = Level(tiles)
         level.size = size
