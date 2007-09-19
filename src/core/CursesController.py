@@ -33,7 +33,7 @@ class CursesController:
         self.mapCentre = (2,2)
         self.screen.refresh()
         logging.debug("Rarr, controller created")
-        self.dungeon = Dungeon.buildRandom()
+        self.dungeon = Dungeon.Dungeon.buildRandom()
         self.currentLevel = 0
         
     

@@ -48,6 +48,6 @@ if __name__ == "__main__":
         logging.info("Ending turns")
         del game
     except:
+        logging.debug(traceback.format_exc())
         del game
-        traceback.print_exc()
     logging.info("Exiting")
