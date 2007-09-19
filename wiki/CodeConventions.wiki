@@ -1,0 +1,26 @@
+#summary List of code conventions for the project.
+#labels Phase-Implementation
+
+= Indentation =
+
+Each indentation is 4 spaces. People using tabs will be shot (even though I like tabs (Kev)).
+
+= Editor =
+
+Hel likes using IDLE, so if you want the path of least resistance, use that :)
+
+= Variable naming =
+
+Variables shall be named in lowerCamelCase.
+
+= Method naming =
+
+Methods, shall be named in lowerCamelCase.
+
+= Class naming =
+
+All classes shall be named with a capital for each word. LikeThisClass.
+
+
+
+ 
