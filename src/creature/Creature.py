@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# helhack.py - Program entry point (__main__).
+# Creature.py - Base class for all living creatures in the game.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -17,14 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        print "Usage: "
-        print "   ./helhack.py "
-        print ""
-        print "Nothing to see here, move along."
-        exit()
-    #Main game launch goes here
-
+class Creature:
+	""" The creature's overall level. 
+	"""
+	level = 1
