@@ -15,6 +15,7 @@ This page is meant to contain information about the player character. Available 
      * Class
      * A set of attributes
      * Display data (symbol, color)
+     * Spells
 
 == Available classes: ==
 Class infuences fighting style in some yet to be determined way, and what skills you have available to you. You can become multiple classes, and switch between roles, or be a combination class, and have each subclass level slower. Class affects stats on level up.
@@ -34,5 +35,6 @@ Your race affects your starting stats, and your stats when you level up. You can
   * Wisdom (magic related?)
   * Intelligence (magic related?)
   * Charisma (wont really have a purpose unless we add towns and NPCs in future releases)
+ 
  
  
