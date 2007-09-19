@@ -35,6 +35,7 @@ class CursesController:
         logging.debug("Rarr, controller created")
         self.dungeon = Dungeon.buildRandom()
         self.currentLevel = 0
+        self.count = 0 # debugging only
         
     
     def __del__(self):
@@ -48,15 +49,18 @@ class CursesController:
     def render(self):
         logging.debug("Painting")
         self.screen.clear()
+        logging.debug("Level is sized %s by %s" % self.dungeon.getLevel(self.currentLevel).getSize())
         for screenY in range(0, self.screen.getmaxyx()[0]):
+            
             mapY = self.mapCentre[0] - self.screen.getmaxyx()[0] /2 + screenY
-            if mapY < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[0]:
+            if mapY < 0 or mapY >= self.dungeon.getLevel(self.currentLevel).getSize()[0]:
                 continue
             for screenX in range(0, self.screen.getmaxyx()[1]):
                 mapX = self.mapCentre[1] - self.screen.getmaxyx()[1] /2 + screenX
-                if mapX < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
+                if mapX < 0 or mapX >= self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
                     continue
-                tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY, mapX]
+                logging.debug("Getting tile %s, %s" % (mapY, mapX))
+                tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
                 if tile == None:
                     return
                 self.screen.addstr(screenY,screenX, tile.getGlyph())
@@ -70,4 +74,7 @@ class CursesController:
         logging.debug("Taking a turn")
         
         self.render()
+        self.count += 1
+        if self.count < 100:
+            return True
         return False
