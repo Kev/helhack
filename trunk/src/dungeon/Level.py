@@ -18,20 +18,39 @@
 
 import numpy
 
-import item.Wall
+from item import Wall
 
 class Level:
-	""" Represents a single level of the dungeon.
-	"""
-	
-	def __init__(self, tiles):
-		self.tiles = tiles
-	
-	def buildRandom():
-		tiles = numpy.zeros((5,5))
-		for i in range(0,5):
-			tiles[0,i] = Wall()
-			tiles[4,i] = Wall()
-			tiles[i,0] = Wall()
-			tiles[i,4] = Wall()
-	    return Level(tiles)
+    """ Represents a single level of the dungeon.
+    """
+    
+    def __init__(self, tiles):
+        """ Default constructor: do not use, consider private.
+        """
+        self.tiles = tiles
+    
+    def buildRandom():
+        """ Build a random level
+        """
+        size = (5,5)
+        tiles = numpy.zeros(size)
+        for i in range(0,size[0]):
+            tiles[0,i] = Wall()
+            tiles[size[1] - 1,i] = Wall()
+        for i in range(0,size[1]):
+            tiles[i,0] = Wall()
+            tiles[i,size[0]] = Wall()
+        return Level(tiles)
+    
+    def getSize(self):
+        """ Returns the size of the level
+        """
+        return self.tiles.shape()
+    
+    def getTiles(self):
+        """ Returns the tiles making up the level
+        """
+        return self.tiles
+        
+    
+    buildRandom = staticmethod(buildRandom)

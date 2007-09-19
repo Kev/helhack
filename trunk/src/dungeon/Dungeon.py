@@ -16,20 +16,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dungeon import Level
+
 class Dungeon:
-	""" Class representing a dungeon.
-	"""
-	def __init__(self):
-		self.levels = []
+    """ Class representing a dungeon.
+    """
+    def __init__(self):
+        """ Default constructor - do not use this (consider private)
+        """
+        self.levels = []
 
     def buildRandom():
-		dungeon = Dungeon()
-		dungeon.addLevel(Level.buildRandom()))
-		return dungeon
-	
-	def addLevel(self, level):
-		self.levels.append(level)
-		
-	def getLevels(self):
-		return self.levels
-	
+        """Static constructor for a random dungeon
+        """
+        dungeon = Dungeon()
+        dungeon.addLevel(Level.Level.buildRandom())
+        return dungeon
+    
+    def addLevel(self, level):
+        self.levels.append(level)
+        
+    def getLevel(self, level):
+        return self.levels[levels]
+    
+    buildRandom = staticmethod(buildRandom)
