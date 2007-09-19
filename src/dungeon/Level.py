@@ -46,12 +46,14 @@ class Level:
         for i in range(0,size[1]):
             tiles[i][0] = Wall()
             tiles[i][size[0] - 1] = Wall()
-        return Level(tiles)
+        level = Level(tiles)
+        level.size = size
+        return level
     
     def getSize(self):
         """ Returns the size of the level
         """
-        return self.tiles.shape()
+        return self.size
     
     def getTiles(self):
         """ Returns the tiles making up the level
