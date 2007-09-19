@@ -1,4 +1,4 @@
-# Player.py - Representation of a human player.
+# Dungeon.py - Dungeons.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,6 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Player(Creature):
-	"""Human characters.
+class Dungeon:
+	""" Class representing a dungeon.
 	"""
+	levels = []
+	
+	def addLevel(self, level):
+		self.levels.append(level)
+	
