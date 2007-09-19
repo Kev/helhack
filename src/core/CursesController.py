@@ -18,12 +18,14 @@
 
 import curses
 import logging
-from dungeon.Dungeon import Dungeon 
+from dungeon.Dungeon import Dungeon
+import random 
 
 class CursesController:
     def __init__(self):
         """ Set up the terminal.
         """
+        random.seed()
         self.screen = curses.initscr()
         curses.noecho()
         curses.cbreak()
@@ -59,10 +61,10 @@ class CursesController:
                 mapX = self.mapCentre[1] - self.screen.getmaxyx()[1] /2 + screenX
                 if mapX < 0 or mapX >= self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
                     continue
-                logging.debug("Getting tile %s, %s" % (mapY, mapX))
+                #logging.debug("Getting tile %s, %s" % (mapY, mapX))
                 tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
                 if tile == None:
-                    return
+                    continue
                 self.screen.addstr(screenY,screenX, tile.getGlyph())
                                 
         self.screen.refresh()
@@ -75,6 +77,5 @@ class CursesController:
         
         self.render()
         self.count += 1
-        if self.count < 100:
-            return True
+        self.screen.getkey()
         return False
