@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# helhack.py - Program entry point (__main__).
+# CursesController.py - Main class for a curses game.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -17,28 +16,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys, traceback
-from core.CursesController import CursesController
+import curses
 
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        print "Usage: "
-        print "   ./helhack.py "
-        print ""
-        print "Nothing to see here, move along."
-        exit()
-    #Main game launch goes here
-	#It's bad form to use a general try loop, but this one is to prevent the screen
-	# getting corrupted
-	try:
-		print "Starting game"
-		game = CursesController()
-		print "Starting turns"
-		while game.turn():
-			print "Taking game turn"
-		print "Ending turns"
-	except:
-		traceback.print_exc()
-	finally:
-		del game
+class CursesController:
+	def __init__(self):
+		""" Set up the terminal.
+		"""
+		self.screen = curses.initscr()
+		curses.noecho()
+		curses.cbreak()
+		#FIXME we need to check for colour first
+		curses.start_color()
+		self.screen.clear()
+		self.row = 0
+		self.column = 0
+		self.screen.refresh()
+	
+	def __del__(self):
+		""" Clear up the terminal before dying.
+		"""
+		curses.nocbreak()
+		curses.echo()
+		curses.endwin()
+		
+	def turn(self):
+		""" Take one turn of the game.
+		"""
+		return False
