@@ -21,35 +21,53 @@ import logging
 from dungeon import Dungeon 
 
 class CursesController:
-	def __init__(self):
-		""" Set up the terminal.
-		"""
-		self.screen = curses.initscr()
-		curses.noecho()
-		curses.cbreak()
-		#FIXME we need to check for colour first
-		curses.start_color()
-		self.screen.clear()
-		self.row = 0
-		self.column = 0
-		self.screen.refresh()
-		logging.debug("Rarr, controller created")
-	
-	def __del__(self):
-		""" Clear up the terminal before dying.
-		"""
-		curses.nocbreak()
-		curses.echo()
-		curses.endwin()
-		logging.debug("Arr, fate be a harsh mistress; controller down.")
-	
-	def render(self):
-		logging.debug("Painting")
-		
-	def turn(self):
-		""" Take one turn of the game.
-		"""
-		logging.debug("Taking a turn")
-		
-		self.render()
-		return False
+    def __init__(self):
+        """ Set up the terminal.
+        """
+        self.screen = curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        #FIXME we need to check for colour first
+        curses.start_color()
+        self.screen.clear()
+        self.mapCentre = (2,2)
+        self.screen.refresh()
+        logging.debug("Rarr, controller created")
+        self.dungeon = Dungeon.buildRandom()
+        self.currentLevel = 0
+        
+    
+    def __del__(self):
+        """ Clear up the terminal before dying.
+        """
+        curses.nocbreak()
+        curses.echo()
+        curses.endwin()
+        logging.debug("Arr, fate be a harsh mistress; controller down.")
+    
+    def render(self):
+        logging.debug("Painting")
+        self.screen.clear()
+        for screenY in range(0, self.screen.getmaxyx[0]):
+            mapY = self.mapCentre[0] - self.screen.getmaxyx[0] /2 + screenY
+            if mapY < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[0]:
+                continue
+            for screenX in range(0, self.screen.getmaxyx[1]):
+                mapX = self.mapCentre[1] - self.screen.getmaxyx[1] /2 + screenX
+                if mapX < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
+                    continue
+                tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY, mapX]
+                if tile == 0:
+                    return
+                self.screen.addstr(screenY,screenX, tile.getGlyph())
+                                
+        self.screen.refresh()
+                
+        
+    def turn(self):
+        """ Take one turn of the game.
+        """
+        logging.debug("Taking a turn")
+        
+        self.render()
+        return False
