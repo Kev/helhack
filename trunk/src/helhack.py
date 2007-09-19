@@ -29,16 +29,20 @@ if __name__ == "__main__":
         print "Nothing to see here, move along."
         exit()
     #Main game launch goes here
-	#It's bad form to use a general try loop, but this one is to prevent the screen
-	# getting corrupted
-	try:
-		print "Starting game"
-		game = CursesController()
-		print "Starting turns"
-		while game.turn():
-			print "Taking game turn"
-		print "Ending turns"
-	except:
-		traceback.print_exc()
-	finally:
-		del game
+    #It's bad form to use a general try loop, but this one is to prevent the screen
+    # getting corrupted
+    try:
+        debugFile = open("helhack.log", "w")
+        debugFile.writelines("Starting game\n")
+        game = CursesController()
+        debugFile.writelines("Starting turns\n")
+        carryOn = True
+        while carryOn:
+            debugFile.writelines("Taking game turn\n")
+            carryOn = game.turn()
+        debugFile.writelines("Ending turns\n")
+        del game
+    except:
+        del game
+        traceback.print_exc()
+    debugFile.close()
