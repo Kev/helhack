@@ -1,4 +1,5 @@
-# Creature.py - Base class for all living creatures in the game.
+# Item.py - Base class for all objects ingame, including scenery, 
+#           potions, whatever.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,8 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Creature(Item):
-	""" This class provides the basis of all creatures in the game.
+class Item:
+	""" Base class for all ingame objects, including creatures and scenery
 	"""
-	level = 1 # The creature's overall level
-	inventory = [] # items the creature is carrying
+	
+	def blocking(self):
+		""" Does this item prevent movement on a map?
+		"""
+	
+	def carryable(self):
+		""" Can this item be carried in a backpack?
+		"""
