@@ -28,3 +28,13 @@ class Item:
 	def carryable(self):
 		""" Can this item be carried in a backpack?
 		"""
+
+	def glyph(self):	
+		""" The character used to render this in curses.
+		"""
+		return "@"
+	
+	def colour(self):
+		""" The colour used to render this tile in curses.
+		"""
+		
