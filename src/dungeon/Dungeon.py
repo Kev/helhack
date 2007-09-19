@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dungeon import Level
+from dungeon.Level import Level
 
 class Dungeon:
     """ Class representing a dungeon.
@@ -30,13 +30,13 @@ class Dungeon:
         """Static constructor for a random dungeon
         """
         dungeon = Dungeon()
-        dungeon.addLevel(Level.Level.buildRandom())
+        dungeon.addLevel(Level.buildRandom())
         return dungeon
     
     def addLevel(self, level):
         self.levels.append(level)
         
     def getLevel(self, level):
-        return self.levels[levels]
+        return self.levels[level]
     
     buildRandom = staticmethod(buildRandom)

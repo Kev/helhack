@@ -18,7 +18,7 @@
 
 import curses
 import logging
-from dungeon import Dungeon 
+from dungeon.Dungeon import Dungeon 
 
 class CursesController:
     def __init__(self):
@@ -33,7 +33,7 @@ class CursesController:
         self.mapCentre = (2,2)
         self.screen.refresh()
         logging.debug("Rarr, controller created")
-        self.dungeon = Dungeon.Dungeon.buildRandom()
+        self.dungeon = Dungeon.buildRandom()
         self.currentLevel = 0
         
     
@@ -48,16 +48,16 @@ class CursesController:
     def render(self):
         logging.debug("Painting")
         self.screen.clear()
-        for screenY in range(0, self.screen.getmaxyx[0]):
-            mapY = self.mapCentre[0] - self.screen.getmaxyx[0] /2 + screenY
+        for screenY in range(0, self.screen.getmaxyx()[0]):
+            mapY = self.mapCentre[0] - self.screen.getmaxyx()[0] /2 + screenY
             if mapY < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[0]:
                 continue
-            for screenX in range(0, self.screen.getmaxyx[1]):
-                mapX = self.mapCentre[1] - self.screen.getmaxyx[1] /2 + screenX
+            for screenX in range(0, self.screen.getmaxyx()[1]):
+                mapX = self.mapCentre[1] - self.screen.getmaxyx()[1] /2 + screenX
                 if mapX < 0 or mapY > self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
                     continue
                 tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY, mapX]
-                if tile == 0:
+                if tile == None:
                     return
                 self.screen.addstr(screenY,screenX, tile.getGlyph())
                                 
