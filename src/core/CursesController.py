@@ -17,6 +17,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import curses
+import logging
+
 
 class CursesController:
 	def __init__(self):
@@ -31,6 +33,7 @@ class CursesController:
 		self.row = 0
 		self.column = 0
 		self.screen.refresh()
+		logging.debug("Rarr, controller created")
 	
 	def __del__(self):
 		""" Clear up the terminal before dying.
@@ -38,8 +41,13 @@ class CursesController:
 		curses.nocbreak()
 		curses.echo()
 		curses.endwin()
+		logging.debug("Arr, fate be a harsh mistress; controller down.")
+	
+	def paint():
+		logging.debug("Painting")
 		
 	def turn(self):
 		""" Take one turn of the game.
 		"""
+		logging.debug("Taking a turn\n")
 		return False
