@@ -17,9 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys, traceback
+import sys
+import traceback
 from core.CursesController import CursesController
-
+import logging
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -28,21 +29,25 @@ if __name__ == "__main__":
         print ""
         print "Nothing to see here, move along."
         exit()
+    logging.basicConfig(level=logging.DEBUG,
+                           	format='%(asctime)s %(levelname)s %(message)s',
+		                    filename='./helhack.log',
+		                    filemode='w')
     #Main game launch goes here
     #It's bad form to use a general try loop, but this one is to prevent the screen
     # getting corrupted
+    game = 0
     try:
-        debugFile = open("helhack.log", "w")
-        debugFile.writelines("Starting game\n")
+        logging.info("Starting game")
         game = CursesController()
-        debugFile.writelines("Starting turns\n")
+        logging.info("Starting turns")
         carryOn = True
         while carryOn:
-            debugFile.writelines("Taking game turn\n")
+            logging.debug("Taking game turn")
             carryOn = game.turn()
-        debugFile.writelines("Ending turns\n")
+        logging.info("Ending turns\n")
         del game
     except:
         del game
         traceback.print_exc()
-    debugFile.close()
+    logging.info("Exiting")
