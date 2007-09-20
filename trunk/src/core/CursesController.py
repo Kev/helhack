@@ -64,7 +64,9 @@ class CursesController:
                 #logging.debug("Getting tile %s, %s" % (mapY, mapX))
                 tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
                 if tile == None:
+                    logging.debug("Tile (%s,%s) is empty." % (mapY,mapX))
                     continue
+                logging.debug("Tile (%s,%s) is '%s'." % (mapY,mapX,tile.getGlyph()))
                 self.screen.addstr(screenY,screenX, tile.getGlyph())
                                 
         self.screen.refresh()
