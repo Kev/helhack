@@ -32,11 +32,12 @@ class CursesController:
         #FIXME we need to check for colour first
         curses.start_color()
         self.screen.clear()
-        self.mapCentre = (2,2)
         self.screen.refresh()
         logging.debug("Rarr, controller created")
         self.dungeon = Dungeon.buildRandom()
         self.currentLevel = 0
+        self.mapCentre = (self.dungeon.getLevel(self.currentLevel).getSize()[0]/2,
+                            self.dungeon.getLevel(self.currentLevel).getSize()[1]/2)
         self.count = 0 # debugging only
         
     
@@ -52,14 +53,15 @@ class CursesController:
         logging.debug("Painting")
         self.screen.clear()
         logging.debug("Level is sized %s by %s" % self.dungeon.getLevel(self.currentLevel).getSize())
-        for screenY in range(0, self.screen.getmaxyx()[0]):
-            
-            mapY = self.mapCentre[0] - self.screen.getmaxyx()[0] /2 + screenY
-            if mapY < 0 or mapY >= self.dungeon.getLevel(self.currentLevel).getSize()[0]:
+        mapSize = self.dungeon.getLevel(self.currentLevel).getSize()
+        screenSize = self.screen.getmaxyx()
+        for screenY in range(0, screenSize[0]):
+            mapY = self.mapCentre[0] - screenSize[0] /2 + screenY
+            if mapY < 0 or mapY >= mapSize[0]:
                 continue
-            for screenX in range(0, self.screen.getmaxyx()[1]):
-                mapX = self.mapCentre[1] - self.screen.getmaxyx()[1] /2 + screenX
-                if mapX < 0 or mapX >= self.dungeon.getLevel(self.currentLevel).getSize()[1]: 
+            for screenX in range(0, screenSize[1]):
+                mapX = self.mapCentre[1] - screenSize[1] /2 + screenX
+                if mapX < 0 or mapX >= mapSize[1]: 
                     continue
                 #logging.debug("Getting tile %s, %s" % (mapY, mapX))
                 tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]

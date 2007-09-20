@@ -32,7 +32,7 @@ class Level:
     def buildRandom():
         """ Build a random level
         """
-        size = (random.randrange(8,30),random.randrange(8,30))
+        size = (random.randrange(8,20),random.randrange(8,50))
         tiles = []
         for i in range(0,size[0]):
             x = []
