@@ -33,11 +33,11 @@ class Level:
         """ Build a random level
         """
         size = (random.randrange(8,30),random.randrange(8,30))
-        x = []
-        for i in range(0,size[1]):
-            x.append(None)
         tiles = []
         for i in range(0,size[0]):
+            x = []
+            for i in range(0,size[1]):
+                x.append(None)
             tiles.append(x)
         for i in range(0,size[0]):
             logging.debug("Setting "+str(i)+",0")
@@ -47,7 +47,7 @@ class Level:
         for i in range(0,size[1]):
             logging.debug("Setting 0,"+str(i))
             tiles[0][i] = Wall()
-            logging.debug("Setting "+str(size[1] - 1) + ","+str(i))
+            logging.debug("Setting "+str(size[0] - 1) + ","+str(i))
             tiles[size[0] - 1][i] = Wall()
 
         level = Level(tiles)
