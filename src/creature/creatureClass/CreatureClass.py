@@ -1,4 +1,4 @@
-# Wall.py - Wall object.
+# CreatureClass.py - Base class for all classes of creature in game.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,17 +16,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import curses
+class CreatureClass:
+    """ The base class for all different skill classes.
+    """
+    def __init__(self):
+        self.name = "Unknown class"
+        self.level = 1
 
-from item.Item import Item
-
-class Wall(Item):
-	""" Wall object
-	"""
-	
-	def __init__(self):
-		self.blocking = True
-		self.carryable = False
-		self.glyph = "#"
-		self.colour = curses.COLOR_WHITE
-	
+    def getName(self):
+        return self.name
+        
+    def levelUp(self, increment = 1):
+        for i in range(0,increment):
+            self.level += 1

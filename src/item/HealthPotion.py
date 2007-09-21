@@ -1,4 +1,4 @@
-# Wall.py - Wall object.
+# HealthPotion.py Health potion item.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -17,16 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import curses
-
 from item.Item import Item
-
-class Wall(Item):
-	""" Wall object
+class HealthPotion(Item):
+	""" Health Potion
 	"""
 	
-	def __init__(self):
-		self.blocking = True
+	def __init__(self, level):
+		self.blocking = False
 		self.carryable = False
-		self.glyph = "#"
-		self.colour = curses.COLOR_WHITE
-	
+		self.glyph = "^"
+		self.colour = curses.COLOR_GREEN
+		self.level = level

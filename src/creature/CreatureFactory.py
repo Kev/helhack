@@ -1,4 +1,4 @@
-# Wall.py - Wall object.
+# CreatureFactory.py - Factory for creatures.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,17 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import curses
+from creature.Creature import Creature
+from creature.race.Goblin import Goblin
+from creature.creatureClass.Warrior import Warrior
 
-from item.Item import Item
-
-class Wall(Item):
-	""" Wall object
-	"""
-	
-	def __init__(self):
-		self.blocking = True
-		self.carryable = False
-		self.glyph = "#"
-		self.colour = curses.COLOR_WHITE
-	
+class CreatureFactory:
+    """ Create items.
+    """
+    
+    def getCreature(skillLevel):
+        creature = Creature()
+        creature.addClass(Warrior())
+        creature.levelUp(skillLevel - 1)
+        creature.addRace(Goblin())
+        return creature
+    
+    getCreature = staticmethod(getCreature)

@@ -15,3 +15,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+class Race():
+    """ Base class for all the races of creatures.
+    """
+    def __init__(self):
+        self.name = "Unknown creature"
+        
+    def getName(self):
+        return self.name

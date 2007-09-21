@@ -1,4 +1,4 @@
-# Wall.py - Wall object.
+# Goblin.py - Goblin race.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,17 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import curses
+from creature.race.Race import Race
 
-from item.Item import Item
-
-class Wall(Item):
-	""" Wall object
-	"""
-	
-	def __init__(self):
-		self.blocking = True
-		self.carryable = False
-		self.glyph = "#"
-		self.colour = curses.COLOR_WHITE
-	
+class Goblin(Race):
+    """ Goblins.
+    """
+    def __init__(self):
+        self.name = "Goblin"

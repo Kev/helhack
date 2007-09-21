@@ -1,4 +1,4 @@
-# CreatureClass.py - Base class for all classes of creature in game.
+# Warrior.py - Warrior class
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,7 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class CreatureClass:
-	""" The base class for all different skill classes.
-	"""
-	level = 1
+from creature.creatureClass.CreatureClass import CreatureClass
+
+class Warrior(CreatureClass):
+    """ Bashy bashy.
+    """
+    def __init__(self):
+        self.name = "Warrior"

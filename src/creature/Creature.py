@@ -16,9 +16,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Creature():
-	""" This class provides the basis of all creatures in the game.
-	"""
-	level = 1 # The creature's overall level
-	inventory = [] # items the creature is carrying
-	
+from item.Item import Item
+import curses
+
+class Creature(Item):
+    """ This class provides the basis of all creatures in the game.
+    """
+    
+    def __init__(self):
+        self.level = 1 # The creature's overall level
+        self.inventory = [] # items the creature is carrying
+        self.classes = []
+        self.races = []
+        self.glyph = "+"
+        self.color = curses.COLOR_BLUE
+        self.currentClass = None
+    
+    def addRace(self, newRace):
+        """ Add a new race
+        """
+        self.races.append(newRace)
+        
+    def addClass(self, newClass):
+        """ Add a new class
+        """
+        self.classes.append(newClass)
+        if self.currentClass == None:
+            self.currentClass = newClass
+            
+    def levelUp(self, increment = 1):
+        self.currentClass.levelUp(increment)

@@ -27,7 +27,7 @@ class Item:
 		self.blocking = False
 		self.carryable = False
 		self.glyph = "@"
-		self.colour = curses.COLOR_WHITE
+		self.colour = curses.COLOR_GREEN
 	
 	def isBlocking(self):
 		""" Does this item prevent movement on a map?
