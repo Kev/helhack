@@ -1,4 +1,4 @@
-# Creature.py - Base class for all living creatures in the game.
+# ItemFactory.py - Factory for items.
 # Copyright Kevin Smith 2007.
 #
 # This file is part of HelHack.
@@ -16,9 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Creature():
-	""" This class provides the basis of all creatures in the game.
-	"""
-	level = 1 # The creature's overall level
-	inventory = [] # items the creature is carrying
-	
+from item.HealthPotion import HealthPotion
+
+class ItemFactory:
+    """ Create items.
+    """
+    
+    def getItem(skillLevel):
+        return HealthPotion(skillLevel)
+    
+    getItem = staticmethod(getItem)
