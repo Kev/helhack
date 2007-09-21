@@ -19,32 +19,39 @@
 import logging
 from item.Wall import Wall
 from item.ItemFactory import ItemFactory
+from creature.CreatureFactory import CreatureFactory
 import random
 
 class Level:
     """ Represents a single level of the dungeon.
     """
     
-    def __init__(self, tiles):
+    def __init__(self, tiles, creatureTiles):
         """ Default constructor: do not use, consider private.
         """
         self.tiles = tiles
+        self.creatureTiles = creatureTiles
     
     def buildRandom(skillLevel):
         """ Build a random Level, with creatures and items appropriate to the skillLevel.
         """
         size = (random.randrange(20,40),random.randrange(40,80))
         tiles = []
+        creatureTiles = []
         wall = Wall()
         for i in range(0,size[0]):
             x = []
+            creatureX = []
             for i in range(0,size[1]):
                 x.append(wall)
+                creatureX.append(None)
             tiles.append(x)
+            creatureTiles.append(creatureX)
         
         Level.carveRooms(tiles, size)
         Level.placeItems(tiles, size, skillLevel)
-        level = Level(tiles)
+        Level.placeCreatures(tiles, creatureTiles, size, skillLevel)
+        level = Level(tiles, creatureTiles)
         level.size = size
         return level
 
@@ -61,6 +68,25 @@ class Level:
                 if tiles[position[0]][position[1]] == None:
                     tiles[position[0]][position[1]] = item
                     runAwayLimit = 0
+    
+    def placeCreatures(tiles, creatureTiles, size, skillLevel):
+        """ Takes the provided tile grid, and adds creatures (of an appropriate level) to it.
+        """
+        for creatureIndex in range(0, max(size[0]*size[1]/100, random.randrange(size[0]*size[1]/30))):
+            logging.info("Trying to place item %d in level (skill level %d)" % (creatureIndex, skillLevel))
+            runAwayLimit = 50
+            creature = CreatureFactory.getCreature(skillLevel)
+            while runAwayLimit > 0:
+                runAwayLimit -= 1
+                position = (random.randrange(size[0]), random.randrange(size[1]))
+                if creatureTiles[position[0]][position[1]] != None:
+                    continue
+                if tiles[position[0]][position[1]] != None:
+                    if tiles[position[0]][position[1]].isBlocking():
+                        continue
+                    
+                creatureTiles[position[0]][position[1]] = creature
+                runAwayLimit = 0
     
     def carveRooms(tiles, size):
         """ Takes the provided tile grid, and carves rooms out of it.
@@ -107,8 +133,13 @@ class Level:
         """ Returns the tiles making up the level
         """
         return self.tiles
-        
+    
+    def getCreatures(self):
+        """ Returns the creatures on the level
+        """
+        return self.creatureTiles
     
     buildRandom = staticmethod(buildRandom)
     carveRooms = staticmethod(carveRooms)
     placeItems = staticmethod(placeItems)
+    placeCreatures = staticmethod(placeCreatures)

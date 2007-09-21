@@ -73,7 +73,9 @@ class CursesController:
                 #logging.debug("Tile (%d,%d) %d" % (mapY, mapX, inRange))
                 if inRange:
                     #logging.debug("Getting tile (%d, %d)" % (mapY, mapX))
-                    tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
+                    tile = self.dungeon.getLevel(self.currentLevel).getCreatures()[mapY][mapX]
+                    if tile == None:
+                        tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
                 else:
                     tile = wall
                 if tile == None:
@@ -93,5 +95,8 @@ class CursesController:
         
         self.render()
         self.count += 1
-        self.screen.getkey()
-        return False
+        key = self.screen.getkey()
+        if key == "q" or key == "Q":
+            logging.info("Received quit key (%s), stopping turns." % key)
+            return False
+        return True
