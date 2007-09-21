@@ -32,7 +32,7 @@ class Level:
     def buildRandom():
         """ Build a random level
         """
-        size = (random.randrange(8,20),random.randrange(8,50))
+        size = (random.randrange(20,40),random.randrange(40,80))
         tiles = []
         wall = Wall()
         for i in range(0,size[0]):
@@ -41,7 +41,7 @@ class Level:
                 x.append(wall)
             tiles.append(x)
         
-        for roomIndex in range(0, max(3, random.randrange(size[0]*size[1]/50))):
+        for roomIndex in range(0, max(3, random.randrange(size[0]*size[1]/100))):
             logging.info("Trying to build room %d in level" % roomIndex)
             #it's possible to run away in an infinite loop,
             #bail out if it looks like we will.
