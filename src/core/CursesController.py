@@ -19,6 +19,7 @@
 import curses
 import logging
 from dungeon.Dungeon import Dungeon
+from item.Wall import Wall
 import random 
 
 class CursesController:
@@ -55,21 +56,32 @@ class CursesController:
         logging.debug("Level is sized %s by %s" % self.dungeon.getLevel(self.currentLevel).getSize())
         mapSize = self.dungeon.getLevel(self.currentLevel).getSize()
         screenSize = self.screen.getmaxyx()
-        for screenY in range(0, screenSize[0]):
+        wall = Wall()
+        for screenY in range(0, screenSize[0]-1):
             mapY = self.mapCentre[0] - screenSize[0] /2 + screenY
+            inYRange = True
             if mapY < 0 or mapY >= mapSize[0]:
-                continue
+                logging.debug("Tile (%d,x) is out of map range " % (mapY))
+                inYRange = False
+                
             for screenX in range(0, screenSize[1]):
+                inRange = inYRange
                 mapX = self.mapCentre[1] - screenSize[1] /2 + screenX
                 if mapX < 0 or mapX >= mapSize[1]: 
-                    continue
-                #logging.debug("Getting tile %s, %s" % (mapY, mapX))
-                tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
+                    logging.debug("Tile (%d,%d) is out of map range " % (mapY, mapX))
+                    inRange = False
+                logging.debug("Tile (%d,%d) %d" % (mapY, mapX, inRange))
+                if inRange:
+                    logging.debug("Getting tile (%d, %d)" % (mapY, mapX))
+                    tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
+                else:
+                    tile = wall
                 if tile == None:
-                    logging.debug("Tile (%s,%s) is empty." % (mapY,mapX))
-                    continue
-                logging.debug("Tile (%s,%s) is '%s'." % (mapY,mapX,tile.getGlyph()))
-                self.screen.addstr(screenY,screenX, tile.getGlyph())
+                    logging.debug("Tile (%d,%d) is empty." % (mapY,mapX))
+                    None
+                else:
+                    #logging.debug("Tile (%d,%d) at (%d,%d) is '%s'." % (mapY,mapX,screenY,screenX,tile.getGlyph()))
+                    self.screen.addstr(screenY,screenX, tile.getGlyph())
                                 
         self.screen.refresh()
                 
