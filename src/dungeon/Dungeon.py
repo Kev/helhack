@@ -30,7 +30,7 @@ class Dungeon:
         """Static constructor for a random dungeon
         """
         dungeon = Dungeon()
-        dungeon.addLevel(Level.buildRandom())
+        dungeon.addLevel(Level.buildRandom(0))
         return dungeon
     
     def addLevel(self, level):

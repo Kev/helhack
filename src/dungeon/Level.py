@@ -18,6 +18,7 @@
 
 import logging
 from item.Wall import Wall
+from item.ItemFactory import ItemFactory
 import random
 
 class Level:
@@ -29,8 +30,8 @@ class Level:
         """
         self.tiles = tiles
     
-    def buildRandom():
-        """ Build a random level
+    def buildRandom(skillLevel):
+        """ Build a random Level, with creatures and items appropriate to the skillLevel.
         """
         size = (random.randrange(20,40),random.randrange(40,80))
         tiles = []
@@ -41,6 +42,29 @@ class Level:
                 x.append(wall)
             tiles.append(x)
         
+        Level.carveRooms(tiles, size)
+        Level.placeItems(tiles, size, skillLevel)
+        level = Level(tiles)
+        level.size = size
+        return level
+
+    def placeItems(tiles, size, skillLevel):
+        """ Takes the provided tile grid, and adds items (of an appropriate level) to it.
+        """
+        for itemIndex in range(0, max(size[0]*size[1]/100, random.randrange(size[0]*size[1]/30))):
+            logging.info("Trying to place item %d in level (skill level %d)" % (itemIndex, skillLevel))
+            runAwayLimit = 50
+            item = ItemFactory.getItem(skillLevel)
+            while runAwayLimit > 0:
+                runAwayLimit -= 1
+                position = (random.randrange(size[0]), random.randrange(size[1]))
+                if tiles[position[0]][position[1]] == None:
+                    tiles[position[0]][position[1]] = item
+                    runAwayLimit = 0
+    
+    def carveRooms(tiles, size):
+        """ Takes the provided tile grid, and carves rooms out of it.
+        """
         for roomIndex in range(0, max(3, random.randrange(size[0]*size[1]/100))):
             logging.info("Trying to build room %d in level" % roomIndex)
             #it's possible to run away in an infinite loop,
@@ -49,7 +73,7 @@ class Level:
             while runAwayLimit > 0:
                 runAwayLimit -= 1
                 logging.debug("Attempting to add a room, %d attempts left", runAwayLimit)
-                roomCorner = (random.randrange(size[0] - 5), random.randrange(size[0] - 5))
+                roomCorner = (random.randrange(size[0] - 5), random.randrange(size[1] - 5))
                 roomSize = (max(4, random.randrange(size[0] / 3)), max(4, random.randrange(size[1] / 3)))
                 valid = True
                 for y in range(roomCorner[0], roomCorner[0] + roomSize[0]):
@@ -60,7 +84,7 @@ class Level:
                         if x >= size[1]:
                             valid = False
                             break
-                        if tiles[y][x] != wall:
+                        if not isinstance(tiles[y][x], Wall):
                             logging.debug("Trying to put room sized %d*%d, corner (%d,%d) failed because non-wall at (%d,%d)" %
                                 (roomSize[0], roomSize[1], roomCorner[0], roomCorner[1], y, x))
                             valid = False
@@ -73,10 +97,6 @@ class Level:
                         tiles[y][x] = None
                 logging.info("Room created.")
                 runAwayLimit = 0
-        
-        level = Level(tiles)
-        level.size = size
-        return level
     
     def getSize(self):
         """ Returns the size of the level
@@ -90,3 +110,5 @@ class Level:
         
     
     buildRandom = staticmethod(buildRandom)
+    carveRooms = staticmethod(carveRooms)
+    placeItems = staticmethod(placeItems)

@@ -61,23 +61,23 @@ class CursesController:
             mapY = self.mapCentre[0] - screenSize[0] /2 + screenY
             inYRange = True
             if mapY < 0 or mapY >= mapSize[0]:
-                logging.debug("Tile (%d,x) is out of map range " % (mapY))
+                #logging.debug("Tile (%d,x) is out of map range " % (mapY))
                 inYRange = False
                 
             for screenX in range(0, screenSize[1]):
                 inRange = inYRange
                 mapX = self.mapCentre[1] - screenSize[1] /2 + screenX
                 if mapX < 0 or mapX >= mapSize[1]: 
-                    logging.debug("Tile (%d,%d) is out of map range " % (mapY, mapX))
+                    #logging.debug("Tile (%d,%d) is out of map range " % (mapY, mapX))
                     inRange = False
-                logging.debug("Tile (%d,%d) %d" % (mapY, mapX, inRange))
+                #logging.debug("Tile (%d,%d) %d" % (mapY, mapX, inRange))
                 if inRange:
-                    logging.debug("Getting tile (%d, %d)" % (mapY, mapX))
+                    #logging.debug("Getting tile (%d, %d)" % (mapY, mapX))
                     tile = self.dungeon.getLevel(self.currentLevel).getTiles()[mapY][mapX]
                 else:
                     tile = wall
                 if tile == None:
-                    logging.debug("Tile (%d,%d) is empty." % (mapY,mapX))
+                    #logging.debug("Tile (%d,%d) is empty." % (mapY,mapX))
                     None
                 else:
                     #logging.debug("Tile (%d,%d) at (%d,%d) is '%s'." % (mapY,mapX,screenY,screenX,tile.getGlyph()))
