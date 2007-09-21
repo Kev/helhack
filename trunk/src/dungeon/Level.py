@@ -34,22 +34,46 @@ class Level:
         """
         size = (random.randrange(8,20),random.randrange(8,50))
         tiles = []
+        wall = Wall()
         for i in range(0,size[0]):
             x = []
             for i in range(0,size[1]):
-                x.append(None)
+                x.append(wall)
             tiles.append(x)
-        for i in range(0,size[0]):
-            logging.debug("Setting "+str(i)+",0")
-            tiles[i][0] = Wall()
-            logging.debug("Setting "+str(i) + ","+str(size[1] - 1))
-            tiles[i][size[1] - 1] = Wall()
-        for i in range(0,size[1]):
-            logging.debug("Setting 0,"+str(i))
-            tiles[0][i] = Wall()
-            logging.debug("Setting "+str(size[0] - 1) + ","+str(i))
-            tiles[size[0] - 1][i] = Wall()
-
+        
+        for roomIndex in range(0, max(3, random.randrange(size[0]*size[1]/50))):
+            logging.info("Trying to build room %d in level" % roomIndex)
+            #it's possible to run away in an infinite loop,
+            #bail out if it looks like we will.
+            runAwayLimit = 50
+            while runAwayLimit > 0:
+                runAwayLimit -= 1
+                logging.debug("Attempting to add a room, %d attempts left", runAwayLimit)
+                roomCorner = (random.randrange(size[0] - 5), random.randrange(size[0] - 5))
+                roomSize = (max(4, random.randrange(size[0] / 3)), max(4, random.randrange(size[1] / 3)))
+                valid = True
+                for y in range(roomCorner[0], roomCorner[0] + roomSize[0]):
+                    if y >= size[0]:
+                        valid = False
+                        break
+                    for x in range(roomCorner[1], roomCorner[1] + roomSize[1]):
+                        if x >= size[1]:
+                            valid = False
+                            break
+                        if tiles[y][x] != wall:
+                            logging.debug("Trying to put room sized %d*%d, corner (%d,%d) failed because non-wall at (%d,%d)" %
+                                (roomSize[0], roomSize[1], roomCorner[0], roomCorner[1], y, x))
+                            valid = False
+                if not valid:
+                    logging.info("Failed creation of room, see if we should try again.")
+                    continue
+                for y in range(roomCorner[0], roomCorner[0] + roomSize[0]):
+                    for x in range(roomCorner[1], roomCorner[1] + roomSize[1]):
+                        logging.debug("Tunnelling out tile (%d,%d)" % (y,x))
+                        tiles[y][x] = None
+                logging.info("Room created.")
+                runAwayLimit = 0
+        
         level = Level(tiles)
         level.size = size
         return level
